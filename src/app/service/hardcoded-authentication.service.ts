@@ -10,7 +10,15 @@ export class HardcodedAuthenticationService {
   authenticate(username: string, password: string)
   {
     if(username === 'in28minutes' && password === 'dummy')
+    {
+      sessionStorage.setItem('authenticatedUser', username);
       return true;
+    }
     return false;
+  }
+
+  isUserLoggedIn() {
+    let user = sessionStorage.getItem('authenticatedUser');
+    return !(user == null);
   }
 }
