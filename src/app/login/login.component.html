@@ -1,7 +1,10 @@
-<small *ngIf="invalidLogin">invalid credentials</small>
+<h1>Login</h1>
+<div class="container">
+    <div class="alert alert-warning" *ngIf="invalidLogin">invalid credentials</div>
 
-<form action="">
-    User Name : <input type="text" name="username" [(ngModel)]="username">
-    Password : <input type="password" name="password" [(ngModel)]="password" autocomplete="on">
-    <button (click)="handleLogin()">Login</button>
-</form>
+    <div>
+        User Name : <input type="text" name="username" [(ngModel)]="username">
+        Password : <input type="password" name="password" [(ngModel)]="password" autocomplete="on">
+        <button class="btn btn-success" (click)="handleLogin()">Login</button>
+    </div>
+</div>
