@@ -10,7 +10,7 @@ import { Todo } from '../todo';
 })
 export class TodoComponent implements OnInit {
   id: number = this.route.snapshot.params['id'];
-  todo: Todo = new Todo(0, '', false, new Date())
+  todo: Todo = new Todo(this.id, '', false, new Date())
   constructor(
     private service: TodoDataService,
     private route: ActivatedRoute,
@@ -18,19 +18,31 @@ export class TodoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.service.retrieveTodo('in28minutes', this.id).subscribe(
-      data => this.todo = data
-    )
+    if (this.id != -1) {
+      this.service.retrieveTodo('in28minutes', this.id).subscribe(
+        data => this.todo = data
+      )
+    }
   }
 
   saveTodo() {
-    this.service.updateTodo('in28minutes', this.id, this.todo)
-      .subscribe(
-        data => {
-          console.log(data)
-          this.router.navigate(['todos'])
-        }
-      )
+    if (this.id === -1) {
+      this.service.createTodo('in28minutes', this.todo)
+        .subscribe(
+          data => {
+            console.log(data)
+            this.router.navigate(['todos']);
+          }
+        )
+    } else {
+      this.service.updateTodo('in28minutes', this.id, this.todo)
+        .subscribe(
+          data => {
+            console.log(data)
+            this.router.navigate(['todos'])
+          }
+        )
+    }
   }
 
 }
