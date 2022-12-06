@@ -9,6 +9,7 @@ import { WelcomeDataService } from '../service/data/welcome-data.service';
 })
 export class WelcomeComponent implements OnInit {
   name = ''
+  welcomeMessageFromService: string = ''
   constructor(private route: ActivatedRoute, public service: WelcomeDataService) { }
 
   ngOnInit(): void {
@@ -17,7 +18,13 @@ export class WelcomeComponent implements OnInit {
 
   getWelcomeMessage() {
     this.service.executeHelloWorldBeanService().subscribe(
-      response => console.log(response.message)
+      response => console.log(response.message),
+      error => this.handleErrorResponse(error)
     );
+  }
+
+  handleErrorResponse(error: any)
+  {
+    this.welcomeMessageFromService = error.error.message
   }
 }
